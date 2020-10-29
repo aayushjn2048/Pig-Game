@@ -1,6 +1,13 @@
-var scores,roundScore,activePlayer,dice, playState;
+var scores,roundScore,activePlayer,dice, playState,target;
 init();
-
+document.querySelector(".inp-final-score").addEventListener('keypress',function(inputKey){
+    if(!playState){
+        target = parseInt(document.querySelector(".inp-final-score").value);
+        console.log(target);
+        if(inputKey.key === 'Enter')
+            playState = true;
+    }
+});
 var rollBtn = document.querySelector('.btn--roll');
 rollBtn.addEventListener('click', function () {
     if(playState){
@@ -39,7 +46,8 @@ document.querySelector('.btn--hold').addEventListener('click', function() {
     {
         scores[activePlayer] += roundScore;
         document.getElementById('score--'+activePlayer).textContent = scores[activePlayer];
-        if(scores[activePlayer]>=20){
+        if(scores[activePlayer]>=target){
+            target = NaN;
             playState = false;
             document.getElementById('name--'+activePlayer).textContent = 'Winner!!!';
             document.querySelector('.dice').style.display = 'none';
@@ -66,10 +74,13 @@ function nextPlayer(){
 document.querySelector('.btn--new').addEventListener('click', init);
 
 function init() {
+    if(target)
+        playState = true;
+    else
+        playState = false;
     scores = [0,0];
     roundScore = 0;
     activePlayer = 0;
-    playState = true;
     alreadyGotSix = false;
 
     document.getElementById('current--0').textContent = '0';
