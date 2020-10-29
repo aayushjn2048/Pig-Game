@@ -10,8 +10,21 @@ rollBtn.addEventListener('click', function () {
         diceDOM.src = 'dice-'+dice+'.png';
 
         if(dice !== 1){
-            roundScore += dice;
-            document.getElementById('current--'+activePlayer).textContent = roundScore;
+            if(dice === 6){
+                if(alreadyGotSix){
+                    nextPlayer();
+                    alreadyGotSix = false;
+                }
+                else{
+                    alreadyGotSix = true;
+                    roundScore += dice;
+                    document.getElementById('current--'+activePlayer).textContent = roundScore;
+                }
+            }
+            else{
+                roundScore += dice;
+                document.getElementById('current--'+activePlayer).textContent = roundScore;
+            }
         }
         else{
             nextPlayer();
@@ -54,6 +67,7 @@ function init() {
     roundScore = 0;
     activePlayer = 0;
     playState = true;
+    alreadyGotSix = false;
 
     document.getElementById('current--0').textContent = '0';
     document.getElementById('current--1').textContent = '0';
