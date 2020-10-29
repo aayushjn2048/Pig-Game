@@ -12,8 +12,9 @@ rollBtn.addEventListener('click', function () {
         if(dice !== 1){
             if(dice === 6){
                 if(alreadyGotSix){
+                    scores[activePlayer] = 0;
+                    document.getElementById('score--'+activePlayer).textContent = scores[activePlayer];
                     nextPlayer();
-                    alreadyGotSix = false;
                 }
                 else{
                     alreadyGotSix = true;
@@ -22,6 +23,7 @@ rollBtn.addEventListener('click', function () {
                 }
             }
             else{
+                alreadyGotSix = false;
                 roundScore += dice;
                 document.getElementById('current--'+activePlayer).textContent = roundScore;
             }
@@ -52,6 +54,7 @@ document.querySelector('.btn--hold').addEventListener('click', function() {
 
 function nextPlayer(){
     roundScore = 0;
+    alreadyGotSix = false;
     document.getElementById('current--'+activePlayer).textContent = 0;
     document.querySelector('.player--'+activePlayer).classList.remove('player--active');
     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
